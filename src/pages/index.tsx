@@ -10,8 +10,10 @@ export async function getServerSideProps() {
   return { props: { data } };
 }
 
-export default function Home({ data }: { data: { time: string } }) {
+export default function Home({ data }: string) {
+  console.log(data);
   const serverData = JSON.parse(data);
+  console.log(serverData);
 
   return (
     <div className={styles.container}>
