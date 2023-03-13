@@ -13,7 +13,7 @@ interface MyInterface {
   data: string;
 }
 
-export default function Home({data} : {date: string}) {
+export default function Home({data}: {data: any}) {
   console.log(data);
   console.log(typeof(data))
   const serverData = JSON.parse(data);
