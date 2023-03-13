@@ -9,9 +9,13 @@ export async function getServerSideProps() {
   const data = JSON.stringify({ time: new Date() });
   return { props: { data } };
 }
+interface MyInterface {
+  data: string;
+}
 
-export default function Home({ data }: string) {
+export default function Home({data} : {date: string}) {
   console.log(data);
+  console.log(typeof(data))
   const serverData = JSON.parse(data);
   console.log(serverData);
 
