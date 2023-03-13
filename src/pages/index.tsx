@@ -2,22 +2,18 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
+import { useEffect, useState } from 'react'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export async function getServerSideProps() {
-  const data = JSON.stringify({ time: new Date() });
-  return { props: { data } };
-}
-interface MyInterface {
-  data: string;
-}
-
 export default function Home({data}: {data: any}) {
-  console.log(data);
-  console.log(typeof(data))
-  const serverData = JSON.parse(data);
-  console.log(serverData);
+
+  const [time, setTime] = useState<Date | null>(null);
+  useEffect(() => {
+    fetch("/api/time")
+    .then(res => res.json())
+    .then(json => setTime(new Date(json.time)));
+  }, [])
 
   return (
     <div className={styles.container}>
@@ -28,9 +24,14 @@ export default function Home({data}: {data: any}) {
           </Head>
 
           <main className={styles.main}>
-              <h1 className={styles.title}>
-                  Welcome to <a href="https://nextjs.org">Next.js! The time is {serverData.time}</a>
-              </h1>
+          <h1 className={styles.title}>
+                Welcome to{" "}
+                <a href="https://nextjs.org">
+                    Next.js!{" "}
+                    {time &&
+                    `The time is ${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`}
+                </a>
+                </h1>
           </main>
         </div>
   )
